@@ -4,8 +4,7 @@ public class LostStuff {
     private String category;
     private String color;
     private String size;
-    public LostStuff(String category, String color, String size){
-        this.size=size;
+    public LostStuff(String category, String color){
         this.category=category;
         this.color=color;
     }

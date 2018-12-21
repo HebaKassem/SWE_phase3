@@ -4,7 +4,7 @@ public class postControl {
         return true;
     }
     public void AskForConfirmation(){
-
+System.out.println("1)confirm posting...2)cancel");
     }
     public void askForPhoto(){
 
