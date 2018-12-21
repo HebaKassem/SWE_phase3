@@ -1,11 +1,15 @@
+import java.nio.charset.Charset;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.*;
+import java.util.Random;
 
 public class Account {
-    private String username;
-    private String password;
-    private String Email;
-    private String MobileNumber;
-    private String code;
+    public String username;
+    public String password;
+    public String Email;
+    public String MobileNumber;
+    public String accountCode;
     Scanner s = new Scanner(System.in);
 
     public Account() {
@@ -23,7 +27,7 @@ public class Account {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.accountCode = code;
     }
 
     public void setPassword(String password) {
@@ -43,7 +47,7 @@ public class Account {
     }
 
     public String getCode() {
-        return code;
+        return accountCode;
     }
 
     public String getUsername() {

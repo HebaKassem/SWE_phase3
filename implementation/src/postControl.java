@@ -12,6 +12,6 @@ public class postControl {
     public void SendSubmissionFailedMsg(){
         System.out.println("SubmissionFailed");
     }
-    public Post CreatePost(){
+    public void CreatePost(){
     }
 }
