@@ -2,12 +2,15 @@ public class Post {
     private int id;
     private String photoPath;
     private String description;
-    public Post(){
+    public Authentication a = new Authentication();
+    public LostStuff lS;
+    public Post(String photopath, String description, String color, LostStuff l, Authentication a){
     }
-    public Post(int id, String photoPath, String description){
-        this.id=id;
+    public Post(String photoPath, String description, LostStuff lS, Authentication a){
         this.photoPath=photoPath;
         this.description=description;
+        this.a=a;
+        this.lS=lS;
     }
     public void setId(int id){
         this.id=id;
