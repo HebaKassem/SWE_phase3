@@ -69,9 +69,19 @@ public class AccountControl {
         return email;
     }
 
-    public boolean checkPasswordMatch(String pass)//to be corrected
+    public boolean Check_Password_match(Database db,String pass, int index)
     {
-        return true;
+        if(db.accounts.get(index).password.equals(pass))
+        {
+            System.out.println("Valid Password :)");
+            System.out.println("you are logged in");
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     public void updateUsername(String uname) {

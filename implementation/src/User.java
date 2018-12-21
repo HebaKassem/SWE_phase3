@@ -25,14 +25,11 @@ public class User {
     }
 
 
-    public void createAccount() {
+    public void createAccount(Database db) {
         boolean passVerification = false, usernameVerification = false;
-        Database db = new Database();
         String username = "", password = "", Email = "", MobileNumber = "";
-
         // while (!passVerification||!usernameVerification) {
         while (!passVerification) {
-            db = new Database();
             writeName();
             username = writeUsername();
             password = writePassword();
@@ -214,5 +211,57 @@ public class User {
         }
 
     }
+    public void Login( Database db)
+    {
+        String password = "", Email = "";
+        int index;
+        boolean matching;
+        boolean found=false;
+        userAccount = new Account();
+        Email=writeMail();
+        for (int i = 0 ; i<db.accounts.size();i++)
+        {
+            if ((db.accounts.get(i).Email.equals(Email)))
+            {
+                found = true;
+                index = i;
+                password = writePassword();
+                matching = accControl.Check_Password_match(db, password, index);
+                if (matching == false)
+                {
+                    for (int in = 0; in < 3; in++)
+                    {
+                        System.out.println("Invalid Password! ");
+                        System.out.println("ReEnter Your Password: ");
+                        password = writePassword();
+                        matching = accControl.Check_Password_match(db, password, index);
+                        if (matching) {
+                            break;
+                        }
+                        if (in == 2) {
+                            System.out.println(" Retry Later");
+
+                        }
+                    }
+                }
+
+
+            }
+
+            if (i==db.accounts.size()-1)
+            {
+                User u = new User();
+                System.out.println("You don't have an account");
+                System.out.println("Create one for FREE");
+                u.createAccount(db);
+                break;
+
+
+            }
+        }
+
+
+    }
+
 
 }
