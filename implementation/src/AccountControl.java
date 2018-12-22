@@ -3,10 +3,9 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.*;
 import java.util.Random;
-
 public class AccountControl {
 
-    Account acc = new Account();
+    Account acc=new Account();
 
     public static String generateRandomAlphaNumericCode() {
         String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -24,13 +23,13 @@ public class AccountControl {
     //instead of sendVerifyCode !!
     public void AccSendCode() {
         System.out.println("cooddee is " + generateRandomAlphaNumericCode());
-        acc.setVerifCode(generateRandomAlphaNumericCode());
-        System.out.println("\nverification code is..." + acc.accountVerifCode);
+        acc.setCode( generateRandomAlphaNumericCode());
+        System.out.println("\nverification code is..." + acc.accountCode);
 
     }
 
     public boolean validateCode(String code) {
-        if (acc.accountVerifCode.equals(code)) {
+        if (acc.accountCode.equals(code)) {
             System.out.println("valid code :)");
             return true;
         } else {
@@ -38,34 +37,20 @@ public class AccountControl {
             return false;
         }
     }
+     /*
+        boolean verifyUsername(String uname) {
 
-    boolean verifyUsername(String uname, Database d) {
-        boolean preExists = false;
-        for (int i = 0; i < d.accounts.size(); i++) {
-            if (d.accounts.get(i).getUsername().equals(uname))
-                preExists = true;
+            // System.out.println("pass is "+pass);
+            if ()
+            {
+                System.out.println("invalid password ");
+                return false;
+            }
+            System.out.println("valid password ");
+            return true;
         }
+    */
 
-        if (preExists) {
-            System.out.println("invalid username ");
-            return false;
-
-        } else {
-            System.out.println("valid username");
-            return !preExists;
-        }
-    }
-
-    boolean verifyPassStrength(String pass) {
-
-        if ((pass.length() <= 8) || (!pass.matches(".*[a-zA-Z]+.*")) || (!pass.matches(".*[0-9]+.*")))//correct check as it doesn't work
-        {
-            System.out.println("invalid password ");
-            return false;
-        }
-        System.out.println("valid password ");
-        return true;
-    }
 
     public void sendIncorrectMSG() {
     }
@@ -84,12 +69,16 @@ public class AccountControl {
         return email;
     }
 
-    public boolean Check_Password_match(Database db, String pass, int index) {
-        if (db.accounts.get(index).password.equals(pass)) {
+    public boolean Check_Password_match(Database db,String pass, int index)
+    {
+        if(db.accounts.get(index).password.equals(pass))
+        {
             System.out.println("Valid Password :)");
             System.out.println("you are logged in");
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
 

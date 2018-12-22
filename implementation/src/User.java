@@ -2,10 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User {
-   // public int userid = db.users.size();
-    public int userid;//DO
+    Database db = new Database();
+    public int userid = db.users.size();
     private String name;
     private Account userAccount = new Account();
+    AccountControl accControl = new AccountControl();
 
     Scanner s = new Scanner(System.in);
 
@@ -13,54 +14,66 @@ public class User {
     public User() {
     }
 
-    public User( String name, Account userAccount) {
+    /* public User(int uid, String name, Account userAccount) {
+         this.userid =uid;
          this.userAccount = userAccount;
          this.name = name;
-     }
+     }*/
+    public User(int uid, String name) {
+        this.userid = uid;
+        this.name = name;
+    }
 
 
     public void createAccount(Database db) {
-        AccountControl ac =new AccountControl();
-
         boolean passVerification = false, usernameVerification = false;
-        String name="",username = "", password = "", Email = "", MobileNumber = "";
-        while (!passVerification || !usernameVerification) {
-            name= writeName();
+        String username = "", password = "", Email = "", MobileNumber = "";
+        // while (!passVerification||!usernameVerification) {
+        while (!passVerification) {
+            writeName();
             username = writeUsername();
             password = writePassword();
             Email = writeMail();
             MobileNumber = writeMobileNum();
-
-            passVerification = ac.verifyPassStrength(password);
-            usernameVerification = ac.verifyUsername(username, db);
+            passVerification = verifyPassStrength(password);
+            //  usernameVerification=verifyUsername(username);
         }
 
 
         userAccount = new Account();
-        ac.AccSendCode();
+        accControl.AccSendCode();
         boolean codeValidation = false;
         while (!codeValidation) {
             String code = writeCode();
-            codeValidation = ac.validateCode(code);
+            codeValidation = accControl.validateCode(code);
         }
 
         userAccount = new Account(username, password, Email, MobileNumber);
+        int id = db.users.size() + 1;
+        //User user = new User(userid,name, userAccount);
+        // int usersCurrentSize = db.usersOldSize;
 
+        User user = new User(id, name);
 
         db.accounts.add(userAccount);
-
-        User user = new User(name,userAccount);
         db.users.add(user);
-        user.setUserid(db.users.indexOf(user));
-
-
 
         System.out.println();
-        System.out.println("Account is successfully created ");
+          System.out.println("Account is successfully created ");
 
     }
 
 
+    boolean verifyPassStrength(String pass) {
+
+        if ((pass.length() <= 8) || (!pass.matches(".*[a-zA-Z]+.*")) || (!pass.matches(".*[0-9]+.*")))//correct check as it doesn't work
+        {
+            System.out.println("invalid password ");
+            return false;
+        }
+        System.out.println("valid password ");
+        return true;
+    }
 
     public String writeUsername() {
         System.out.print("Enter UserName: ");
@@ -68,10 +81,9 @@ public class User {
         return username;
     }
 
-    public String writeName() {
+    public void writeName() {
         System.out.print("Enter Name: ");
         name = s.nextLine();
-        return name;
     }
 
     public String writePassword() {
@@ -124,56 +136,41 @@ public class User {
         return code;
     }
 
-    public String takePhoto() {
+    public String takePhoto(){
         Scanner a = new Scanner(System.in);
         System.out.print("Enter photoPath: ");
         String Path = a.nextLine();
         return Path;
     }
-
-    public String writeItemDescription() {
+    public String writePhotoInfo(){
         Scanner b = new Scanner(System.in);
-        System.out.print("enter item description: ");
-        String desc = b.nextLine();
+        System.out.print("enter photo info: ");
+        String desc= b.nextLine();
         return desc;
     }
-
-    public String choosecategory(Database d) {
+    public String choosecategory(Database d){
         Scanner c = new Scanner(System.in);
-        System.out.print("enter number of  category : " + d.categories + ": ");
+        System.out.print("choose category : "+d.categories);
         int cat = c.nextInt();
-        return d.categories.get(cat - 1);
+        return d.categories.get(cat-1);
     }
-
-    public String chooseColor() {
+    public String chooseColor(){
         Scanner d = new Scanner(System.in);
-        System.out.print("write color : ");
+        System.out.print("choose color : ");
         String color = d.nextLine();
         return color;
     }
-
-    public String chooseSize() {
-        Scanner d = new Scanner(System.in);
-        System.out.print("write size : [large ,  medium  , small]: ");
-        String size = d.nextLine();
-        while (!(size.equals("large") || size.equals("medium") || size.equals("small"))) {
-            System.out.println(" please enter a valid size");
-            size = d.nextLine();
-        }
-        return size;
-    }
-
-    public Authentication setQ_A() {
+    public Authentication setQ_A(){
         Scanner e = new Scanner(System.in);
         Scanner f = new Scanner(System.in);
         Scanner w = new Scanner(System.in);
-        postControl c = new postControl();
-        Authentication a = new Authentication();
+        postControl c=new postControl();
+        Authentication a= new Authentication();
         ArrayList<String> ques = new ArrayList<>();
         ArrayList<String> ans = new ArrayList<>();
         System.out.print("Enter number of questions: ");
         int n = w.nextInt();
-        for (int i = 0; i < n; i++) {
+        for(int i=0 ; i<n ; i++){
             System.out.println("Enter question: ");
             String qu = e.nextLine();
             ques.add(qu);
@@ -183,74 +180,57 @@ public class User {
         }
         a.setListOfQuestions(ques);
         a.setListOfAnswers(ans);
+        c.AskForConfirmation();
         return a;
     }
 
-    public void searchItem(Database d) {
-        SearchControl sc = new SearchControl();
-
-        Scanner in = new Scanner(System.in);
-        String category = choosecategory(d);
-        String color = chooseColor();
-        String size = chooseSize();
-
-        sc.searchPost(category, color, size, d);
-
-
-    }
-
-    public int sendConfirmation() {
-        int choice = s.nextInt();
-        return choice;
-    }
-
-    public void PostPhoto(Database d) {
+    public void PostPhoto(Database d){
         postControl c = new postControl();
-
         String photopath = takePhoto();
-        String description = writeItemDescription();
+        String description =writePhotoInfo();
         String cat = choosecategory(d);
         String color = chooseColor();
-        String size = chooseSize();
         Authentication a = setQ_A();
         c.AskForConfirmation();
+        int choice = s.nextInt();
+        switch (choice){
+            case 1:
+            {
 
-        int choice = sendConfirmation();
-        switch (choice) {
-            case 1: {
-
-                LostStuff ls = new LostStuff(cat, color, size);
-                Post newPost = new Post(photopath, description, ls, a);
+                LostStuff l = new LostStuff(cat, color);
+                Post newPost = new Post(photopath, description,color , l, a);
 
                 d.posts.add(newPost);
                 newPost.setId(d.posts.indexOf(newPost));
                 break;
             }
-            default: {
-                c.SendSubmissionFailedMsg();
+            default:
+            {
+                System.out.println("Submission failed");
             }
         }
 
     }
-
-    //use other classes for login fn!
-    public void Login(Database db) {
-        AccountControl accControl =new AccountControl();
-
+    public void Login( Database db)
+    {
         String password = "", Email = "";
         int index;
         boolean matching;
-        boolean found = false;
+        boolean found=false;
         userAccount = new Account();
-        Email = writeMail();
-        for (int i = 0; i < db.accounts.size(); i++) {
-            if ((db.accounts.get(i).Email.equals(Email))) {
+        Email=writeMail();
+        for (int i = 0 ; i<db.accounts.size();i++)
+        {
+            if ((db.accounts.get(i).Email.equals(Email)))
+            {
                 found = true;
                 index = i;
                 password = writePassword();
                 matching = accControl.Check_Password_match(db, password, index);
-                if (matching == false) {
-                    for (int in = 0; in < 3; in++) {
+                if (matching == false)
+                {
+                    for (int in = 0; in < 3; in++)
+                    {
                         System.out.println("Invalid Password! ");
                         System.out.println("ReEnter Your Password: ");
                         password = writePassword();
@@ -264,15 +244,23 @@ public class User {
                         }
                     }
                 }
+
+
             }
-            if (i == db.accounts.size() - 1) {
+
+            if (i==db.accounts.size()-1)
+            {
                 User u = new User();
                 System.out.println("You don't have an account");
                 System.out.println("Create one for FREE");
                 u.createAccount(db);
                 break;
+
+
             }
         }
+
+
     }
 
 
