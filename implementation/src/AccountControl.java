@@ -23,7 +23,6 @@ public class AccountControl {
 
     //instead of sendVerifyCode !!
     public void AccSendCode() {
-        System.out.println("cooddee is " + generateRandomAlphaNumericCode());
         acc.setVerifCode(generateRandomAlphaNumericCode());
         System.out.println("\nverification code is..." + acc.accountVerifCode);
 
