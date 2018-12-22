@@ -10,7 +10,9 @@ public class SearchControl {
                         index=i;
         }
         if(index==-1)
-            showNotFoundMsg();
+        {
+            showNotFoundMessage();
+        }
         else
             showMatchingPost(index,d);
     }
@@ -23,9 +25,9 @@ public class SearchControl {
 
     }
 
-    public String showNotFoundMsg()
+    public void showNotFoundMessage()
     {
-        return "item not found :( ";
+        System.out.println( "item is not found :( ");
     }
 
 }

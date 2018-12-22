@@ -4,20 +4,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Database db = new Database();
-        // db.readDB();
-        User u = new User();
+        UserControl uc=new UserControl();
+
         boolean flag = true;
         int choice;
+
         do {
             System.out.println("Hello new User...");
             System.out.println("1) createAccount   2)Login  3)terminate Program");
             choice = sc.nextInt();
 
             if (choice == 1)
-                u.createAccount(db);
+                uc.createAccount(db);
 
             else if (choice == 2) {
-                u.Login(db);
+                uc.Login(db);
 
             } else if (choice == 3)
                 flag = false;
@@ -27,23 +28,26 @@ public class Main {
                 choice = sc.nextInt();
 
                 if (choice == 1)
-                    u.PostPhoto(db);
+                    uc.PostPhoto(db);
 
                 else if (choice == 2) {
-                     u.searchItem(db);
+                     uc.searchItem(db);
                 }
             }
 
 
         } while (flag);
-        //  db.saveDB();
-        postControl pc=new postControl();
-        System.out.println("Posts are ");
-        System.out.println();
-        for(int i=0;i< db.posts.size();i++){
-          pc.showPost(i,db);
-            System.out.println();
-        }
 
+        System.out.println("To show posts enter 1");
+        int ans=sc.nextInt();
+        if(ans==1) {
+            postControl pc = new postControl();
+            System.out.println("Posts are ");
+            System.out.println();
+            for (int i = 0; i < db.posts.size(); i++) {
+                pc.showPost(i, db);
+                System.out.println();
+            }
+        }
     }
 }

@@ -2,9 +2,9 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class Authentication {
-    private String ContactNumber;
-    private ArrayList<String> ListOfQuestions;
-    private ArrayList<String>ListOfAnswers;
+    public String ContactNumber;
+    public ArrayList<String> ListOfQuestions;
+    public ArrayList<String>ListOfAnswers;
     public Authentication(){
 
     }
