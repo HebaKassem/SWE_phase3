@@ -9,8 +9,9 @@ public class Account {
     public String password;
     public String Email;
     public String MobileNumber;
-    public String accountCode;
+    public String accountVerifCode;
     Scanner s = new Scanner(System.in);
+    //AccountControl accControl = new AccountControl();
 
     public Account() {
     }
@@ -26,8 +27,8 @@ public class Account {
         this.username = username;
     }
 
-    public void setCode(String code) {
-        this.accountCode = code;
+    public void setVerifCode(String verifCode) {
+        this.accountVerifCode = verifCode;
     }
 
     public void setPassword(String password) {
@@ -38,6 +39,8 @@ public class Account {
         this.Email = email;
     }
 
+    public void setAccCode(String accCode) { this.accountVerifCode = accCode; }
+
     public void setMobileNumber(String mobileNumber) {
         this.MobileNumber = mobileNumber;
     }
@@ -47,7 +50,7 @@ public class Account {
     }
 
     public String getCode() {
-        return accountCode;
+        return accountVerifCode;
     }
 
     public String getUsername() {

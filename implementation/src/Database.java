@@ -3,14 +3,15 @@ import java.util.ArrayList;
 import java.util.*;
 
 public class Database {
-    User user;
-    int usersOldSize;
+
     public static ArrayList<User> users = new ArrayList<User>();
     public static ArrayList<Account> accounts = new ArrayList<Account>();
     public static ArrayList<Post> posts = new ArrayList<Post>();
-    public static ArrayList<Authentication> authentications = new ArrayList<Authentication>();
+   // public static ArrayList<Authentication> authentications = new ArrayList<Authentication>();
     public static ArrayList<String> categories = new ArrayList<String>(Arrays.asList("Wallet","Id", "charger", "cat","dog","mobile", "laptop","watch","money","others"));
 
+
+    /*
     public void saveDB() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Heba\\Desktop\\FCI =)\\3rd\\SW_Engineering_1\\Projects\\Phase_3\\implementation\\users.txt", true));
@@ -54,4 +55,5 @@ public class Database {
 
 
     }
+    */
 }
