@@ -7,10 +7,13 @@ public class Main {
         UserControl uc=new UserControl();
 
         boolean flag = true;
-        int choice;
+        int choice,t;
 
         do {
+            System.out.println();
+            System.out.println();
             System.out.println("Hello new User...");
+            System.out.println();System.out.println();
             System.out.println("1) createAccount   2)Login  3)terminate Program");
             choice = sc.nextInt();
 
@@ -18,12 +21,16 @@ public class Main {
                 uc.createAccount(db);
 
             else if (choice == 2) {
-                uc.Login(db);
+                t=uc.Login(db);
+                if(t==1)
+                {continue;}
 
             } else if (choice == 3)
                 flag = false;
 
             while (choice != 3) {
+                System.out.println();
+                System.out.println();
                 System.out.println("1) PostPhoto   2)searchItem   3)LogOut");
                 choice = sc.nextInt();
 

@@ -66,7 +66,13 @@ public class AccountControl {
         return true;
     }
 
-    public void sendIncorrectMSG() {
+    public void sendIncorrectMSG(int i) {
+        if(i==1)
+        { System.out.println("Invalid Password! ");
+            System.out.println("ReEnter Your Password: ");}
+        if(i==2)
+        { System.out.println(" Retry Later");}
+
     }
 
     public void createAccount() {
@@ -82,13 +88,21 @@ public class AccountControl {
         String email = "";
         return email;
     }
+    public void openProfile()
+    {
+        System.out.println("Valid Password :)");
+        System.out.println("you are logged in");
+    }
 
-    public boolean Check_Password_match(Database db, String pass, int index) {
-        if (db.accounts.get(index).password.equals(pass)) {
-            System.out.println("Valid Password :)");
-            System.out.println("you are logged in");
+    public boolean Check_Password_match(Database db,String pass, int index)//checkMatch
+    {
+        if(db.accounts.get(index).getPassword().equals(pass)) //getpassword
+        {
+            openProfile(); // open profile
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
 

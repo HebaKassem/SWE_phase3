@@ -90,45 +90,50 @@ public class UserControl {
     }
 
 
-    //use other classes for login fn!
-    //correct the cases
-    public void Login(Database db) {
-        AccountControl accControl =new AccountControl();
+    public int Login( Database db)
+    {  User u = new User(); AccountControl accControl= new AccountControl();
 
         String password = "", Email = "";
         int index;
+        int t=0;
         boolean matching;
-        boolean found = false;
+        boolean found=false;
         userAccount = new Account();
-        Email = user.writeMail();
-        for (int i = 0; i < db.accounts.size(); i++) {
-            if ((db.accounts.get(i).Email.equals(Email))) {
+        Email=u.writeMail();//enterEmail
+        for (int i = 0 ; i<db.accounts.size();i++)
+        {
+            if ((db.accounts.get(i).Email.equals(Email)))
+            {
                 found = true;
                 index = i;
-                password = user.writePassword();
+                password = u.writePassword(); //EnterPassword
                 matching = accControl.Check_Password_match(db, password, index);
-                if (matching == false) {
-                    for (int in = 0; in < 3; in++) {
-                        System.out.println("Invalid Password! ");
-                        System.out.println("ReEnter Your Password: ");
-                        password = user.writePassword();
+                if (matching == false)
+                {
+                    for (int in = 0; in < 3; in++)
+                    {
+                        accControl.sendIncorrectMSG(1);
+                        password = u.writePassword();
                         matching = accControl.Check_Password_match(db, password, index);
-                        if (matching)
+                        if (matching) {
                             break;
-
-                        if (in == 2)
-                            System.out.println(" Retry Later");
-
+                        }
+                        if (in == 2) {
+                            {accControl.sendIncorrectMSG(in);
+                                t=1;}
+                        }
                     }
                 }
             }
-            if (i == db.accounts.size() - 1) {
-                User u = new User();
-                System.out.println("You don't have an account");
-                System.out.println("Create one for FREE");
-                  createAccount(db);
-                break;
-            }
+
         }
+        if (found==false)
+        {
+            System.out.println("You don't have an account");
+            System.out.println("Create one for FREE");
+            createAccount(db);
+        }
+        return t;
     }
+
 }
